@@ -1,6 +1,6 @@
 {
-	"name": "object-flatten",
-	"version": "2.1.5",
+	"name": "object-flat",
+	"version": "0.0.0",
 	"description": "flat nested object and return with accurate typing",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -14,17 +14,17 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/tylim88/object-flatten.git"
+		"url": "git+https://github.com/tylim88/object-flat.git"
 	},
 	"author": "",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/tylim88/object-flatten/issues"
+		"url": "https://github.com/tylim88/object-flat/issues"
 	},
-	"homepage": "https://github.com/tylim88/object-flatten#readme",
+	"homepage": "https://github.com/tylim88/object-flat#readme",
 	"keywords": [
 		"object",
-		"flatten",
+		"flat",
 		"typescript",
 		"nested",
 		"typed"

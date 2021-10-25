@@ -1,34 +1,56 @@
-// https://stackoverflow.com/questions/69566806/typescript-change-type-to-partialnot-undefined-so-it-wont-trigger-error-2741-b
-type IncludePropertyKeys<A, U = undefined> = {
-	[P in keyof A]: A[P] extends U ? P : never
-}[keyof A]
-type ExcludePropertyKeys<A, U = undefined> = {
-	[P in keyof A]: A[P] extends U ? never : P
-}[keyof A]
+type DeepKey<T, K extends keyof T, J extends string> = K extends string
+	? T[K] extends Record<string, unknown>
+		? `${K}${J}${DeepKey<T[K], keyof T[K], J>}`
+		: K
+	: never
 
-type IncludePropertyTypes<A, U = undefined> = {
-	[K in IncludePropertyKeys<A, U>]: unknown
+type DeepKeyS<T, J extends string> = DeepKey<T, keyof T, J>
+
+type DeepValue<
+	T,
+	J extends string,
+	P extends DeepKeyS<T, J>
+> = P extends `${infer K}${J}${infer Rest}`
+	? K extends keyof T
+		? Rest extends DeepKeyS<T[K], J>
+			? DeepValue<T[K], J, Rest>
+			: never
+		: never
+	: P extends keyof T
+	? T[P]
+	: never
+
+type ObjectFlatten<T extends Record<string, unknown>, J extends string> = {
+	[TKey in DeepKeyS<T, J>]: DeepValue<T, J, TKey>
 }
-type ExcludePropertyTypes<A, U = undefined> = {
-	[K in ExcludePropertyKeys<A, U>]: unknown
-}
 
-type OptionalPropertyType<A, U = undefined> = ExcludePropertyTypes<A, U> &
-	Partial<IncludePropertyTypes<A, U>>
-
-export const objExact = <
-	T extends { [index: string]: unknown },
-	Y extends OptionalPropertyType<T>
+export const flatten = <
+	T extends Record<string, unknown>,
+	J extends string = '.'
 >(
-	dummyObject: T,
-	targetObject: Y
+	object: T,
+	join: J
 ) => {
-	const newObj: { [prop: string]: unknown } = {}
-	for (const prop in dummyObject) {
-		if ((targetObject as { [prop: string]: unknown })[prop] !== undefined) {
-			newObj[prop] = (targetObject as { [prop: string]: unknown })[prop]
+	let obj = {}
+
+	const flat = (object: Record<string, unknown>, key: string) => {
+		for (const prop in object) {
+			const newKey = (key ? key + join : key) + prop
+			if (
+				!Array.isArray(object[prop]) &&
+				typeof object[prop] === 'object' &&
+				object[prop] !== null
+			) {
+				flat(object[prop] as Record<string, unknown>, newKey)
+			} else {
+				obj = { ...obj, [newKey]: object[prop] }
+			}
 		}
 	}
 
-	return newObj as { [Z in keyof T & keyof Y]: Y[Z] }
+	flat(object, '')
+
+	return obj as ObjectFlatten<T, J>
 }
+
+console.log(flatten({ a: 1, b: 2, c: { d: 1, 3: 2, f: { g: 1 } } }, '.'))

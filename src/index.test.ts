@@ -1,22 +1,32 @@
 import 'jest'
-import { objExact } from './index'
-import { expectType } from 'tsd'
+import { flatten } from './index'
 
-describe('objSwap', () => {
-	it('object-flatten test"}', () => {
-		const a = objExact(
-			{ a: 1, b: 2 },
-			{ a: 'hello', b: false as const, c: '!' }
+describe('objFlat', () => {
+	it('object-flat test"}', () => {
+		const a = flatten({ a: 1, b: 2, c: 1 }, '.')
+
+		const b = flatten(
+			{ a: 1, b: { c: 3, d: { e: 4 } }, f: { g: { h: 'a', j: [{ a: 1 }] } } },
+			'='
 		)
 
-		const b = objExact({ a: 1, b: undefined }, { a: 'hello', b: 123, c: '!' })
+		expect(a).toEqual({ a: 1, b: 2, c: 1 })
+		expect(b).toEqual({
+			a: 1,
+			'b=c': 3,
+			'b=d=e': 4,
+			'f=g=h': 'a',
+			'f=g=j': [{ a: 1 }],
+		})
 
-		const c = objExact({ a: 1, b: undefined }, { a: 'hello', c: '!' })
-		expect(a).toEqual({ a: 'hello', b: false })
-		expect(b).toEqual({ a: 'hello', b: 123 })
-		expect(c).toEqual({ a: 'hello' })
-		expect(() => expectType<{ a: string; b: boolean }>(a)).not.toThrow()
-		expect(() => expectType<{ a: string; b: number }>(b)).not.toThrow()
-		expect(() => expectType<{ a: string }>(c)).not.toThrow()
+		const c: typeof a = { a: 1, b: 2, c: 1 }
+
+		const d: typeof b = {
+			a: 1,
+			'b=c': 1,
+			'b=d=e': 1,
+			'f=g=h': '1',
+			'f=g=j': [{ a: 1 }],
+		}
 	})
 })
