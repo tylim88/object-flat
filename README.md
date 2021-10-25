@@ -27,7 +27,7 @@ import { flatten } from 'object-flat'
 
 const flattenObj = flatten(
 	{ a: 1, b: { c: 3, d: { e: 4 } }, f: { g: { h: 'a', j: [{ a: 1 }] } } }, // object that you want to flat
-	'.' // define the character you to join the nested key path.
+	'.' // define the character you want to use to join the nested key path.
 )
 // return value is { a: 1, 'b.c': 3, 'b.d.e': 4, 'f.g.h': 'a', 'f.g.j': [{ a: 1 }]},
 // return value type is { a: number, 'b.c': number, 'b.d.e': number, 'f.g.h': string, 'f.g.j': { a: number }[]]}

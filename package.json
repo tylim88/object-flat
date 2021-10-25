@@ -1,6 +1,6 @@
 {
 	"name": "object-flat",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"description": "flat nested object and return with accurate typing",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
