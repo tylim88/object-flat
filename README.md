@@ -29,6 +29,6 @@ const flattenObj = flatten(
 	{ a: 1, b: { c: 3, d: { e: 4 } }, f: { g: { h: 'a', j: [{ a: 1 }] } } }, // target
 	'.' // character to join the key path.
 )
-// return value is { a: 1, 'b.c': 3, 'b.d.e': 4, 'f.g.h': 'a', 'f.g.j': [{ a: 1 }]},
-// return value type is { a: number, 'b.c': number, 'b.d.e': number, 'f.g.h': string, 'f.g.j': { a: number }[]]}
+// return { a: 1, 'b.c': 3, 'b.d.e': 4, 'f.g.h': 'a', 'f.g.j': [{ a: 1 }]},
+// type is { a: number, 'b.c': number, 'b.d.e': number, 'f.g.h': string, 'f.g.j': { a: number }[]]}
 ```
