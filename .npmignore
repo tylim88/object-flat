@@ -3,6 +3,8 @@
 /.github
 /node_modules
 /src
+/coverage
+/.husky
 
 # ignore file
 .gitignore
