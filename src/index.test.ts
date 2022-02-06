@@ -1,5 +1,5 @@
 import 'jest'
-import { flatten } from './index'
+import flatten from './index'
 
 describe('objFlat', () => {
 	it('object-flat test"}', () => {

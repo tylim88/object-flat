@@ -23,7 +23,7 @@ flatten nested object into flat object, you can define what character to join th
 NOTE: does not flatten array and what inside the array.
 
 ```ts
-import { flatten } from 'object-flat'
+import flatten from 'object-flat'
 
 const flattenObj = flatten(
 	{ a: 1, b: { c: 3, d: { e: 4 } }, f: { g: { h: 'a', j: [{ a: 1 }] } } }, // target

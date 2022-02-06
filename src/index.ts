@@ -53,4 +53,4 @@ export const flatten = <
 	return obj as ObjectFlatten<T, J>
 }
 
-console.log(flatten({ a: 1, b: 2, c: { d: 1, 3: 2, f: { g: 1 } } }, '.'))
+export default flatten
