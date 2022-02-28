@@ -1,6 +1,6 @@
 # object-flat
 
-[![npm](https://img.shields.io/npm/v/object-flat)](https://www.npmjs.com/package/object-flat) [![GitHub](https://img.shields.io/github/license/tylim88/object-flat)](https://github.com/tylim88/object-flat/blob/master/LICENSE) [![tylim88](https://circleci.com/gh/tylim88/object-flat.svg?style=shield)](<[LINK](https://github.com/tylim88/object-flat#object-flat)>)
+[![npm](https://img.shields.io/npm/v/object-flat)](https://www.npmjs.com/package/object-flat) [![GitHub](https://img.shields.io/github/license/tylim88/object-flat)](https://github.com/tylim88/object-flat/blob/master/LICENSE) [![tylim88](https://circleci.com/gh/tylim88/object-flat.svg?style=shield)](<[LINK](https://github.com/tylim88/object-flat#object-flat)>) [![dependencies](https://img.shields.io/badge/dynamic/json?url=https://api.npmutil.com/package/object-flat&label=dependencies&query=$.dependencies.count)](https://www.npmjs.com/package/object-flat?activeTab=dependencies)
 
 🐤 flat nested object and return with accurate typing.
 

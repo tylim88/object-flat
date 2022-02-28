@@ -1,32 +1,135 @@
-import 'jest'
 import flatten from './index'
 
+const a = {
+	a: 123,
+	b: null,
+	c: undefined,
+	d: 'abc',
+	f: false,
+	g: true,
+	i: [],
+	o: new Number(),
+	p: new Boolean(),
+	q: () => {
+		//
+	},
+	r: function () {
+		//
+	},
+}
+const prependPropsName = (obj: Record<string, unknown>, name: string) => {
+	const newObj = {} as Record<string, unknown>
+	for (const prop in obj) {
+		newObj[name + prop] = obj[prop]
+	}
+	return newObj
+}
 describe('objFlat', () => {
-	it('object-flat test"}', () => {
-		const a = flatten({ a: 1, b: 2, c: 1 }, '.')
-
-		const b = flatten(
-			{ a: 1, b: { c: 3, d: { e: 4 } }, f: { g: { h: 'a', j: [{ a: 1 }] } } },
-			'='
-		)
-
-		expect(a).toEqual({ a: 1, b: 2, c: 1 })
-		expect(b).toEqual({
-			a: 1,
-			'b=c': 3,
-			'b=d=e': 4,
-			'f=g=h': 'a',
-			'f=g=j': [{ a: 1 }],
+	it('test empty', () => {
+		expect(flatten({}, '.')).toEqual({})
+	})
+	it('test basic', () => {
+		expect(
+			flatten(
+				{
+					...a,
+					aa: {
+						...a,
+						aa: {
+							...a,
+						},
+					},
+				},
+				'.'
+			)
+		).toEqual({
+			...a,
+			...prependPropsName(a, 'aa.'),
+			...prependPropsName(a, 'aa.aa.'),
 		})
-
-		const c: typeof a = { a: 1, b: 2, c: 1 }
-
-		const d: typeof b = {
-			a: 1,
-			'b=c': 1,
-			'b=d=e': 1,
-			'f=g=h': '1',
-			'f=g=j': [{ a: 1 }],
-		}
+	})
+	it('test hybrid', () => {
+		expect(
+			flatten(
+				{
+					a: 123,
+					b: null,
+					c: undefined,
+					d: 'abc',
+					f: false,
+					g: true,
+					aa: {
+						a: 123,
+						b: null,
+						c: undefined,
+						d: 'abc',
+						f: false,
+						g: true,
+					},
+					'bb.a': 123,
+					'bb.b': null,
+					'bb.c': undefined,
+					'bb.d': 'abc',
+					'bb.f': false,
+					'bb.g': true,
+				},
+				'.'
+			)
+		).toEqual({
+			a: 123,
+			b: null,
+			c: undefined,
+			d: 'abc',
+			f: false,
+			g: true,
+			'aa.a': 123,
+			'aa.b': null,
+			'aa.c': undefined,
+			'aa.d': 'abc',
+			'aa.f': false,
+			'aa.g': true,
+			'bb.a': 123,
+			'bb.b': null,
+			'bb.c': undefined,
+			'bb.d': 'abc',
+			'bb.f': false,
+			'bb.g': true,
+		})
+	})
+	it('test hybrid with repeated name', () => {
+		expect(
+			flatten(
+				{
+					a: 123,
+					b: null,
+					c: undefined,
+					d: 'abc',
+					f: false,
+					g: true,
+					aa: {
+						a: 456,
+						b: null,
+						c: undefined,
+						d: 'xyz',
+						f: true,
+						g: false,
+					},
+				},
+				'.'
+			)
+		).toEqual({
+			a: 123,
+			b: null,
+			c: undefined,
+			d: 'abc',
+			f: false,
+			g: true,
+			'aa.a': 456,
+			'aa.b': null,
+			'aa.c': undefined,
+			'aa.d': 'xyz',
+			'aa.f': true,
+			'aa.g': false,
+		})
 	})
 })

@@ -37,9 +37,10 @@ export const flatten = <
 		for (const prop in object) {
 			const newKey = (key ? key + join : key) + prop
 			if (
-				!Array.isArray(object[prop]) &&
 				typeof object[prop] === 'object' &&
-				object[prop] !== null
+				object[prop] !== null &&
+				// https://stackoverflow.com/questions/1173549/how-to-determine-if-an-object-is-an-object-literal-in-javascript
+				Object.getPrototypeOf(object[prop]) === Object.prototype
 			) {
 				flat(object[prop] as Record<string, unknown>, newKey)
 			} else {
