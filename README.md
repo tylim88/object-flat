@@ -22,6 +22,7 @@ flatten nested object into flat object, you can define what character to join th
 
 NOTE: does not flatten array and what inside the array.
 
+
 ```ts
 import flatten from 'object-flat'
 
@@ -31,4 +32,20 @@ const flattenObj = flatten(
 )
 // return { a: 1, 'b.c': 3, 'b.d.e': 4, 'f.g.h': 'a', 'f.g.j': [{ a: 1 }]},
 // type is { a: number, 'b.c': number, 'b.d.e': number, 'f.g.h': string, 'f.g.j': { a: number }[]]}
+```
+
+**NOTE: Flatten ONLY object literal, does NOT flatten below data type**
+
+```ts
+123 // number
+null
+undefined
+'abc' // string
+false
+true
+[]
+new Number()
+new Boolean()
+() => {}
+function () {}
 ```
